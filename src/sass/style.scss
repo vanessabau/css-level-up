@@ -1,3 +1,9 @@
+@use "theme";
+@use "reset";
+@use "utilities/color";
+@use "utilities/layout";
+@use "utilities/grid";
+
 body {
   background-color: #f9f9f9;
   font-family: system-ui, sans-serif;

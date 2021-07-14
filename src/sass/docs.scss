@@ -1,0 +1,41 @@
+.swatch {
+    padding: 0.5rem;
+    background-color: hsl(0, 0%, 100%);
+    box-shadow: 0 0 0.3rem hsl(0, 0%, 70%);
+
+    // nesting behavior
+    &,
+    figcaption{
+        border-radius: 0.5rem;
+    }
+
+    figcaption{
+        display: grid;
+        place-content: center;
+        padding: 1rem;
+        text-align: center;
+    }
+
+    strong{
+        font-size: 1.5rem;
+    }
+}
+
+.docs--outline-children > * {
+    outline: 1px dashed red;
+}
+
+// Take advantage of css selectors
+// In main we are looking for direct descendents that contain the class 'layout', looking for their next sibling
+main > [class*="layout"]+*{
+    margin-top: 4rem;
+}
+
+.docs-container{
+    --color: gray;
+    --height: 30vh;
+
+    min-height: var(--height);
+    outline: 1px dashed var(--color);
+    margin-bottom: 2rem;
+}

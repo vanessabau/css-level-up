@@ -1,0 +1,60 @@
+.layout-grid{
+    --gap: 1rem;
+    
+    display: grid;
+    gap: var(--gap);
+
+    &--column{
+        // Switch default way grid handles items; good for things like social media icons that wont break or wrap
+        //A good way to set columns when you don't need to set widths
+        grid-auto-flow: column;
+    }
+
+    &--auto-fit{
+        --min: 20ch;
+        // Define a way where we are telling grid items how to behave; give it dynamic flexible behavior which gives things the ability to wrap
+        // Have grid items expand to fit
+        // Supply min allowed width grid items to be
+        // The 1fr and autofit Allows shrinking and growing and it can grow up to the available shared space
+        // Still contained witin grid columns being created
+        // grid-template-columns: repeat(auto-fit, minmax(var(--min), 1fr)); swapped out for =>
+        //min function is not grid specific; it is a css function: it selects either the 20ch or the 100% which prevents overflow
+         grid-template-columns: repeat(auto-fit, 
+            minmax(
+                min(var(--min), 100%), 
+                1fr)
+            );
+    }
+
+    &--sidebar{
+        --sidebar-max: 15ch;
+        --content-min: 30ch;
+        // Settings for 1st column
+        grid-template-columns: fit-content(var(--sidebar-max))
+        minmax(
+            // Settings for 2nd column; allowed to fill all remaining space but cannot shrink below 50vw
+            // Functions give very cool responsive abilities
+            min(50vw, var(--content-min)),
+            1fr
+        );
+    }
+
+    &--centered{
+        place-content: center;
+    }
+
+    &--stack{
+        grid-template-areas: "stack";
+        place-items: center;
+
+        //Direct children apply additional rules
+        //h3 appears on top in the center of image due to DOM order
+        >*{
+        grid-area: stack;
+        //Define various placement
+        place-self: var(--place-self);
+        align-self: var(--align-self, var(--place-self));
+        justify-self: var(--justify-self, var(--place-self));
+        }
+    }
+}

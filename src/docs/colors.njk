@@ -1,0 +1,18 @@
+---
+title: Colors
+---
+
+{# Use our classes
+Tapping in to the color name to dynamically create the background class #}
+<ul role="list" class="layout-flex">
+  {% for colorToken in colors %} 
+  <li>
+   <figure class="swatch">
+   <figcaption class="background-{{colorToken.name}}">
+   <strong>{{colorToken.name}}</strong>{{colorToken.color}}
+   </figcaption>
+   </figure>
+  </li>
+  {% endfor %}
+</ul>
+
