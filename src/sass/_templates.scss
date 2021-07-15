@@ -1,0 +1,141 @@
+.template-dashboard{
+    display: grid;
+    grid-template-areas:
+    "header header"
+    "nav main"
+    "nav footer";
+    ;
+
+    grid-auto-rows: auto 1fr auto;
+    grid-auto-columns: 30ch 1fr;
+
+    // Assign areas to grid template areas
+    header{
+        grid-area: header;
+        span{
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+    }
+    nav{
+        grid-area: nav;
+        a{
+            color: inherit;
+        }
+    }
+   
+    main{
+        grid-area: main
+    }
+    footer{
+        grid-area: footer;
+        border-top: 1px solid var(--color-on-text);
+    }
+
+    nav, main{
+        padding: 2rem;
+    }
+    header, footer{
+        padding: 1rem;
+    }
+}
+
+.template-holy-grail{
+    display: grid;
+    
+
+    // Assign areas to grid template areas
+    header{
+        grid-area: header;
+        span{
+            font-size: 1.125rem;
+            font-weight: bold;
+        }
+    }
+    nav{
+        grid-area: nav;
+        a{
+            color: inherit;
+        }
+    }
+   
+    main{
+        grid-area: main
+    }
+    footer{
+        grid-area: footer;
+        border-top: 1px solid var(--color-on-text);
+    }
+
+    nav, main{
+        padding: 2rem;
+    }
+    header, footer{
+        padding: 1rem;
+    }
+
+    aside{
+        background-color: var(--color-on-text);
+        a{
+            color: inherit;
+        }
+    }
+
+@media(min-width: 100ch){
+    grid-template-areas:
+    "header header header"
+    "nav main aside"
+    "footer footer footer";
+    grid-auto-rows: auto 1fr auto;
+    grid-auto-columns: 1fr minmax(50vw, 80ch) 1fr;
+}
+
+}
+
+.template-blog{
+    header{
+        display: grid;
+        place-content: center;
+        min-height: 30vh;
+    }
+
+    // Collapse the min/max width into one function
+    main {
+        width: min(100ch, 100vw);
+        margin: 8vh auto;
+    }
+
+    article {
+        display: grid;
+        grid-template-columns: 
+        // Left area
+            [main-start]
+            // First gutter can shrink to 0 but can also grow
+            minmax(0, 1fr)
+            // Middle col; using -start and -end defines the area the spaces take up
+            [article-start]
+            min(100vw-2rem, 80ch)
+            [article-end]
+            // Last col
+            minmax(0, 1fr)
+            [main-end];
+
+            row-gap: 1rem;
+        
+        // Direct children of the article that are not an image, allow to fill up the grid column of article
+        > *:not(img){
+            grid-column: article;
+        }
+
+        >img {
+            grid-column: main;
+            justify-self: center;
+            margin-top: 4vh;
+            margin-bottom: 4vh;
+        }
+
+    }
+    
+       
+    
+}
