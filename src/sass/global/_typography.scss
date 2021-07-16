@@ -1,0 +1,154 @@
+@use "sass:math";
+
+// Modular type scales by Tim Brown
+$type-scales: (
+    "minorSecond": 1.067,
+    ",ajorSecond": 1.125,
+    "minorThird": 1.2,
+    "majorThird": 1.25,
+    "perfectFourth": 1.333,
+    "augmentedFourth": 1.414,
+    "perfectFifth": 1.5,
+    "goldenRatio": 1.618,
+);
+
+@function type-ratio($scale){
+    // Use Sass function to check if value exists in our map; if so we pull it out and return it
+    @if(map-get($type-scales, $scale)){
+        //Return ratio value if found
+        @return map-get($type-scales, $scale);
+    } @else if(type-of($scale) ==number){
+        //Return passed ratio; this means you can pass in your own number nad the function will pass it back to you so it doesnt break
+        @return $scale;
+    } @else{
+        //Format not allowed
+        @error "$type-scale must be an integer or one of the allowed strings from $type-scales";
+    }
+}
+
+// Set up base font size
+// Default to perfectFourth 
+$type-base-size: 1rem !default;
+$type-scale: "perfectFourth" !default;
+
+// Select by key of map, get ratio number back
+$type-scale-ratio: type-ratio($type-scale);
+
+// Working towards creating a loop that wil go through each, make calculations, and return a font-size
+
+// Sass List in descending order to prevent extra sort function
+// Limited to high-touch heading styles
+$type-levels: 4, 3, 2, 1;
+
+// Pull a variable like a 'let' in Javascript
+$level-size: $type-base-size;
+
+// Create a loop, set loval variable of $level, loop through $type-levels from smallest to largest, based on a particular level we need to compute the final font-size
+// stylelint-disable
+@each $level in $type-levels{
+// Compute level size by taking the font size and multiplying it by the scale size
+$level-size: $level-size *
+$type-scale-ratio;
+
+// Output heading styles via loop
+//Assign to element and create utility class; define directly on the heading level AND create a class
+h#{$level},
+.h#{$level}{
+    font-size: $level-size;
+
+    //Reccomendation courtesy of https://kittygiraudel.com/2020/05/18/using-calc-to-figure-out-optimal-line-height/
+    // line-height: calc(2px + 2ex + 2px);
+
+    // Define a margin bottom for headlines
+    // Set with 'em' to be relative to current 'font-size'
+    // margin-bttom: 0.65em;
+
+    // Using clamp
+    // font-size: clamp(
+    //     1rem,
+    //     4vh + 1rem,
+    //     3rem
+    // )
+
+    // Limit fluid sizing in place based on testing -> smaller ratios are prematurely or unnecessarily reduced
+    // Only apply fluid type scaling if font size is above a certain value where it might be more necessary
+
+    @if ($type-scale-ratio>1.2){
+        // Fluid type styles
+
+        //Remove unit for calculations
+        $level-unitless: math.div($level-size, $level-size * 0 + 1);
+
+        // Set minimum size to a percentage less than $level-size
+        //Reduction is greater for large font sizes (>4rem) to help prevent overflow due to font-size on mobile devices
+        $fluid-reduction: if($level-size > 4, 0.5, 0.33);
+        $fluid-min: $level-unitless - ($fluid-reduction * $level-unitless);
+
+        // Prevent dropping lower than 1rem (body font-size)
+        $fluid-min: if($fluid-min > $type-base-size, $fluid-min, 1);
+
+        //Adjust max modifier slightly per level to prevent "same" size or lower levels appearing larger than higher levels
+        // 4vw was selected by testing from $type-ratios map, YMMV
+        $fluid-scaler: ($level-unitless - $fluid-min) +4vw;
+
+        font-size: clamp(
+            #{$fluid-min}rem,
+            #{$fluid-scaler} + 1rem,
+            #{$level-size}
+        );
+    }
+}
+}
+// stylelint-enable
+
+// :is() unprefized support July 2021: 90%
+:is(h1, h2, h3, h4, .h1, .h2, .h3, .h4){
+    margin-bottom: 0.65em;
+    line-height: calc(2px + 2ex +2px)
+    ;
+}
+
+$content-selectors: "article, .content" !default;
+$content-spacer: 1em !default;
+
+// When you select any element that follows another and we aply to list elements that don't have a class
+#{$content-selectors}{
+--content-spacer: #{$content-spacer};
+
+    > * + *,
+    ul:not([class]) li + li,
+    ol:not([class]) li + li {
+        margin-top: var(--content-spacer);
+    }
+
+    :is(h2, h3:not(h2 + *)):not(:first-child) {
+    margin-top: 2em;
+  }
+
+  // Use a content spacer within a calc
+   ul + p {
+    margin-top: calc(var(--content-spacer) * 2);
+  }
+
+  // Lonely links cards and other sub modules; Links that don't have a class we change to display: inline-block
+  > a:not([class]) {
+    display: inline-block;
+  }
+
+  // Block quote styles; bump up font size and use whatever has been given as a type-scale
+
+   blockquote {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    padding: 0.5em 1.5em;
+    border-left: 2px solid var(--color-primary);
+    font-size: 1rem * $type-scale-ratio;
+  }
+
+  // Separate content
+   hr {
+    margin: 8vh 5vw;
+    border-style: dashed;
+    border-color: var(--color-primary);
+  }
+}

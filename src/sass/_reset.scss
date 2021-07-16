@@ -43,8 +43,16 @@ html:focus-within {
 /* Set core body defaults;  In relation to new safari floating tab bar */
 body {
   min-height: 100vh;
-  line-height: 1.5;
+ 
   text-rendering: optimizeSpeed;
+  font-family: system-ui, sans-serif;
+}
+
+// Only update for content flow elements
+p,
+ul:not([class]):not([role]) li,
+ol:not([class]):not([role]) li{
+   line-height: 1.5;
 }
 
 /* A elements that don't have a class get default styles. If a link does not have a class give it text-decoration skip. Handles underline link - th elower line descenders; also ability to adjust the proerties of the underline */
