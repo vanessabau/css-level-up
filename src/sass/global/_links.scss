@@ -1,0 +1,33 @@
+// Apply our color links variable property to links that don't have a class
+a:not([class]){
+    color: var(--color-links);
+}
+
+
+a,
+button,
+input,
+textarea{
+    // Setting things up to completely use custom properties that way we can still style things in a contextual way which means we will not exclude ahead of time but can style in a contextual way.
+     --outline-size: max(2px, 0.08em);
+  --outline-style: solid;
+  --outline-color: currentColor;
+
+  //Set up standard focus
+   &:focus {
+       // Instead of outline width we are usng outline size and using the max function again which is relative to our font size; we are also using this for a new css property outline-offset which deterines how far away from the element it sits
+       // Nice customization of our focus styles
+    outline: var(--outline-size) var(--outline-style) var(--outline-color);
+    outline-offset: var(--outline-size);
+  }
+
+  &:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  //When it is focus-visible but not focused we want to remove the outline
+  &:focus-visible {
+    outline: var(--outline-size) var(--outline-style) var(--outline-color);
+    outline-offset: var(--outline-size);
+  }
+}

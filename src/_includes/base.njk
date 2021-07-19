@@ -9,9 +9,13 @@
   <link rel="stylesheet" href="{{ '/css/docs.css' | url }}">
 </head>
 <body>
-  <header>
-  <div class="container">
+  <header class="hero hero--centered background-primary" style="--hero-min-height: 20vh">
+  <div class="container hero__content">
     <h1>{{ title }}</h1>
+    {# Nunjucks - if there is a page file slug which is going to apply for all pages outside of the main index page then we're just going to add a quick link back to all docs #}
+    {% if page.fileSlug %}
+    <a href="/" > All Docs</a>
+    {% endif %}
   </div>
   </header>
   <main class="container section content">

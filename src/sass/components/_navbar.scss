@@ -1,0 +1,59 @@
+.navbar {
+      padding: 1rem;
+
+      // Centers list
+ul {
+    --gap: 1rem;
+
+    align-items: center;
+    justify-content: center;
+  }
+
+
+    // If it doesn't have a class inherit the color
+    a:not([class]){
+        color: inherit;
+        text-decoration: none;
+    }
+
+     &:hover {
+      text-decoration: underline;
+    }
+
+    // Helps create the inhertied color for onfocus
+    a.navbar-image{
+        color: inherit;
+    }
+
+    // Only on our centered class we will go back to display flex, flex-wrap: wrap, then we center everything and since we are not using our utility we include the gap property
+    &--centered {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+  }
+
+  // Starts out the same using flex, allow wrap, justification, nock down the rem, 
+  &--divided {
+        --breakpoint: 70ch;
+
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content:center;
+    gap: 1rem;
+
+    &::before {
+      content: "";
+      flex-basis: calc((var(--breakpoint) - 100%) * 500);
+      flex-grow: 100;
+    }
+
+    // We will apply this to the first child of the navbar, give it order -1 wwhich will force it behind the first element
+      > :first-child {
+      order: -1;
+    }
+    
+}
+}

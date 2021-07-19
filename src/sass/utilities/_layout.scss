@@ -13,8 +13,11 @@ section,
 }
 
 .layout-flex{
+    --gap: 2rem;
+    --wrap: wrap;
+
     display: flex; 
-    flex-wrap: wrap;
-    gap: 2rem;   
+    flex-wrap: var(--wrap);
+    gap: var(--gap);   
 }
 // note gap is now supported in most modern browsers

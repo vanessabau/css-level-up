@@ -1,0 +1,22 @@
+img[width]{
+    height: auto;
+}
+
+.image {
+    // Augment base image class to set up aspect ratio
+    // Accepts a value if we provide it otherwise browser will throw out the rules which means it is configurable when we want it to be
+    // Example of a format is 16/9 or 4/3 or 1 which gives a perfec square
+    aspect-ratio: var(--image-aspect-ratio);
+    // Fall back for evergreen browsers for now; also adding as a variable so it can accept a value or not
+    max-height: var(--image-max-height);
+    object-fit: cover;
+
+    // in tandem  with the fallback provide a native css media query; Checking if there is not support for aspectRatio, we must provide a value then enforce a height
+    @supports not (aspect-ratio: 1) {
+        height: var(--ratio-unsupported-height) !important;
+    }
+
+    &--fullwidth{
+        width: 100%;
+    }
+}

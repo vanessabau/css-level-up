@@ -1,0 +1,50 @@
+.hero {
+    // Set up a minimum height
+    --hero-min-height: 30vh;
+    --hero-padding: 2rem;
+
+   display: grid;
+   min-height: var(--hero-min-height);
+   padding: var(--hero-padding);
+
+   a:not([class]){
+       color:inherit;
+   }
+   
+   &--centered {
+       place-content: center;
+       justify-items: center;
+       text-align: center;
+   }
+
+   &--image-stack {
+       // Define height
+       --hero-height: max(40vh, 15rem);
+       --hero-min-height:0;
+
+       // Override hero custom property for padding
+       --hero-padding: 0;
+
+    height: var(--hero-height);
+
+       img{
+           width: 100%;
+           height: var(--hero-height);
+           object-fit: cover;
+       }
+   }
+
+   &__content {
+       --content-text-align: center;
+       --content-padding: 1rem;
+
+       padding-right: var(--content-padding);
+       padding-left: var(--content-padding);
+       text-align: var(--content-text-align);
+
+       // If only one child we will remove margin
+       :only-child{
+           margin:0 ;
+       }
+   }
+}

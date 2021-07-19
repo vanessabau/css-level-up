@@ -1,12 +1,10 @@
 @use "theme";
 @use "reset";
 @use "templates";
-// @use "global" with ($type-scale: "goldenRatio");
 @use "global";
 @use "components";
 @use "utilities";
-
 body {
   background-color: #f9f9f9;
-  
 }
+/*# sourceMappingURL=style.css.map */

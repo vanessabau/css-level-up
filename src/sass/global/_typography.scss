@@ -106,6 +106,10 @@ h#{$level},
     margin-bottom: 0.65em;
     line-height: calc(2px + 2ex +2px)
     ;
+    // Help prevent overflow of long workds/names/URKs
+    overflow-wrap: break-word;
+    // Optional, not supported for all languages
+    hyphens: auto;
 }
 
 $content-selectors: "article, .content" !default;

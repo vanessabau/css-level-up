@@ -120,7 +120,7 @@
             minmax(0, 1fr)
             [main-end];
 
-            row-gap: 1rem;
+            // row-gap: 1rem;
         
         // Direct children of the article that are not an image, allow to fill up the grid column of article
         > *:not(img){

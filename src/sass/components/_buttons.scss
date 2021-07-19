@@ -1,0 +1,90 @@
+$button-default-color: "primary" !default;
+$button-colors: "error", "text" !default;
+
+// stylelint-disable order/properties-order
+.button {
+  --button-background: var(--color-#{$button-default-color});
+  --button-color: var(--color-on-#{$button-default-color});
+  --outline-color: transparent;
+
+  // Reset for links
+  text-decoration: none;
+
+  // Reset for buttons
+  padding: 0.25em 0.75em;
+  border: 2px solid transparent;
+  font-family: inherit;
+  cursor: pointer;
+
+  // Display
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  // Visual
+  border-radius: 0.25em;
+  background-color: var(--button-background);
+  color: var(--button-color);
+
+  // Size
+  min-width: 10ch;
+  min-height: 44px;
+
+  // Text
+  text-align: center;
+  line-height: 1;
+  font-weight: bold;
+
+  // Effects
+  // transition: all 180ms ease-in-out;
+  transition: none 180ms ease-in-out;
+  // Define that we only want the background color and border color to transition
+  transition-property: background-color, color, border-color;
+
+  // On hover we are giong to invert the buttons but retain the darker border
+  // We are also swapping on active
+  // Current color helps keep our colors in sync
+  &:hover,
+  &:active {
+    background-color: var(--button-color);
+    color: var(--button-background);
+    border-color: currentColor;
+  }
+
+// Focus style technique where we stack two different box shadows; we have one we call inner and we have one representing a color
+// In box shadows the origin al one defined will be on top, the next ones will be below
+// The inner color will be set to the button color (white), with an outter color set to the button background
+// The max function controls the border; We are keeping the x and y offsets to zero and the blur to zero; we are keepin ghte spread property which allows it form a pseudo border
+  &:focus {
+    box-shadow: 0 0 0 max(0.15em, 2px)
+        var(--button-focus-inner, var(--button-color)),
+      0 0 0 max(0.3em, 2px) var(--button-focus-outer, var(--button-background));
+  }
+
+  // For each loop ith area and text colors in it
+  @each $color in $button-colors {
+      // Create a modifier class and update our custom button properties
+    &--#{$color} {
+      --button-background: var(--color-#{$color});
+      --button-color: var(--color-on-#{$color});
+    }
+  }
+
+  &__icon {
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+  }
+
+  // A button that is not a button icon then we apply a margin-right
+  &:not(.button-icon) .button__icon {
+    margin-right: 0.5em;
+  }
+
+  &-icon {
+    border-radius: 50%;
+    min-width: unset;
+  }
+
+}
+// stylelint-enable
