@@ -43,6 +43,8 @@ form {
   --outline-style: var(--form-outline-style);
   --outline-color: var(--form-outline-color);
 
+  // These values have been flipped for better responsiveness
+ // Width takes priority so it is allowed to respond down
   width: 100%;
   max-width: var(--form-field-width, 30ch);
   padding: 0.25em 0.5em;

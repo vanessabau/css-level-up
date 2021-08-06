@@ -48,7 +48,11 @@ $button-colors: "error", "text" !default;
   &:active {
     background-color: var(--button-color);
     color: var(--button-background);
-    border-color: currentColor;
+    // border-color: currentColor;
+    // Scope it and only apply if it is not an outline
+     &:not(.button--outlined) {
+      border-color: currentColor;
+    }
   }
 
 // Focus style technique where we stack two different box shadows; we have one we call inner and we have one representing a color
@@ -68,6 +72,15 @@ $button-colors: "error", "text" !default;
       --button-background: var(--color-#{$color});
       --button-color: var(--color-on-#{$color});
     }
+  }
+// Enforce border color
+  &--outlined {
+    //Set the inner value to the same as the button background
+    --button-focus-inner: var(--button-background);
+    // Make focus out the button color as well
+    --button-focus-outer: var(--button-color);
+    
+    border-color: var(--button-color);
   }
 
   &__icon {

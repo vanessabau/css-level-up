@@ -1,3 +1,7 @@
+.template-landing-page {
+  --container-width: 100ch;
+}
+
 .template-dashboard{
     display: grid;
     grid-template-areas:
@@ -5,7 +9,6 @@
     "nav main"
     "nav footer";
     ;
-
     grid-auto-rows: auto 1fr auto;
     grid-auto-columns: 30ch 1fr;
 

@@ -42,7 +42,8 @@ $card-gutter-var: "var(--card-gutter, #{$card-gutter})";
     // Any of these headlines now we are selecting the child of them, also the buttons
     // For these we attach a before rule that tells it to cover the available card space
   > :is(h1, h2, h3, h4) a,
-  > .button {
+  > .button,
+  > a:last-child {
     &::before {
       content: "";
       position: absolute;
@@ -80,12 +81,24 @@ $card-gutter-var: "var(--card-gutter, #{$card-gutter})";
   }
 
   // Pushes elements down to the bottom of the card, specifically in flex; the margin will fill space
-  > :is(.button, ul):last-child {
+  > :is(.button, ul, a, #override):last-child {
     margin-top: auto;
   }
 
   // Adjust the gap
   .layout-flex {
     --gap: 1rem;
+  }
+
+  // Adjust field width and align-self: stretch then disaable margin top to only rely on gap
+
+   .form-group {
+    --form-field-width: 100%;
+
+    align-self: stretch;
+
+    + .form-group {
+      margin-top: 0;
+    }
   }
 }

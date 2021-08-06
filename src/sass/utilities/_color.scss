@@ -25,4 +25,16 @@
 
 //Now this will output those various classes
 
+// Set up a local array of values we are using"
+$greys: "medium", "light" !default;
 
+// For each loop we are supplying the custom variable and we adjust to ensure contrast
+@each $shade in $greys {
+  .background-grey-#{$shade} {
+    background-color: var(--grey-#{$shade});
+
+    @if ($shade == "medium") {
+      color: #fff;
+    }
+  }
+}
